@@ -337,7 +337,7 @@ if (contactForm) {
     if (contactBtn) { contactBtn.textContent = '$ sending...'; contactBtn.disabled = true; }
     const sub = encodeURIComponent(subject + ' — from ' + name);
     const bod = encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\n\n' + message);
-    window.open('https://mail.google.com/mail/?view=cm&fs=1&to=etes2533%40gmail.com&su=' + sub + '&body=' + bod, '_blank', 'noopener');
+    window.open('https://mail.google.com/mail/?view=cm&fs=1&to=ede095053%40gmail.com&su=' + sub + '&body=' + bod, '_blank', 'noopener');
     setTimeout(() => {
       if (contactBtn) { contactBtn.textContent = '✓ opened in Gmail'; contactBtn.style.background = 'var(--green)'; contactBtn.style.color = 'var(--bg)'; }
       setTimeout(() => {
@@ -378,7 +378,7 @@ if (contactForm) {
       const names = selected.map(s => labels[s.key]||s.key).join(', ');
       const su = encodeURIComponent('Custom Package — ETB ' + fmt(total));
       const bo = encodeURIComponent('Hi Edlawit,\n\nSelected features:\n' + names + '\n\nEstimate: ETB ' + fmt(total) + '\n\nPlease send a final quote.');
-      pkgCta.href = 'https://mail.google.com/mail/?view=cm&fs=1&to=etes2533%40gmail.com&su=' + su + '&body=' + bo;
+      pkgCta.href = 'https://mail.google.com/mail/?view=cm&fs=1&to=ede095053%40gmail.com&su=' + su + '&body=' + bo;
       pkgCta.target = '_blank'; pkgCta.rel = 'noopener';
     }
   }
