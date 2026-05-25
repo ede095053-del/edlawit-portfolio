@@ -1,33 +1,35 @@
 /* ============================================================
-   EDLAWIT DAMANA TESFAYE — Portfolio JS
-   Theme: VS Code / Terminal / Hacker
+   EDLAWIT DAMANA — Portfolio JS  (performance-optimised)
    ============================================================ */
 
-/* ============================================================
-   SCROLL PROGRESS BAR
-   ============================================================ */
+const isMobile = () => window.innerWidth <= 768;
+
+/* ---- Scroll progress (throttled with rAF) ---- */
 const progressBar = document.createElement('div');
 progressBar.className = 'scroll-progress';
 document.body.prepend(progressBar);
+let rafScroll = false;
 window.addEventListener('scroll', () => {
-  const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
-  progressBar.style.width = pct + '%';
+  if (rafScroll) return;
+  rafScroll = true;
+  requestAnimationFrame(() => {
+    const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+    progressBar.style.width = pct + '%';
+    rafScroll = false;
+  });
 }, { passive: true });
 
-/* ============================================================
-   BOOT SEQUENCE
-   ============================================================ */
+/* ---- Boot sequence ---- */
 const bootScreen = document.getElementById('bootScreen');
 const bootText   = document.getElementById('bootText');
 const bootBar    = document.getElementById('bootBar');
 
 const bootLines = [
   '> initializing edlawit.dev...',
-  '> loading modules: [HTML5, CSS3, JavaScript]',
-  '> loading modules: [Node.js, Java, Python]',
-  '> connecting to Addis Ababa, Ethiopia 🇪🇹',
+  '> loading: [HTML5, CSS3, JavaScript]',
+  '> loading: [Node.js, Java, Python]',
+  '> location: Addis Ababa, Ethiopia 🇪🇹',
   '> status: open_to_work = true',
-  '> mounting portfolio...',
   '',
   '✓ all systems operational. welcome.',
 ];
@@ -38,8 +40,8 @@ function typeBoot() {
     bootBar.style.width = '100%';
     setTimeout(() => {
       bootScreen.classList.add('hide');
-      setTimeout(() => bootScreen.remove(), 700);
-    }, 400);
+      setTimeout(() => { if (bootScreen.parentNode) bootScreen.remove(); }, 700);
+    }, 300);
     return;
   }
   const line = bootLines[lineIdx];
@@ -47,133 +49,145 @@ function typeBoot() {
     bootText.textContent = bootLines.slice(0, lineIdx).join('\n') + '\n' + line.slice(0, charIdx);
     bootBar.style.width = ((lineIdx / bootLines.length) * 100) + '%';
     charIdx++;
-    setTimeout(typeBoot, charIdx === 1 ? 120 : 22);
+    setTimeout(typeBoot, charIdx === 1 ? 80 : 18);
   } else {
     lineIdx++; charIdx = 0;
-    setTimeout(typeBoot, 80);
+    setTimeout(typeBoot, 60);
   }
 }
 typeBoot();
 
-/* ============================================================
-   CUSTOM CURSOR + TRAIL
-   ============================================================ */
+/* ---- Custom cursor (desktop only, rAF-based) ---- */
 const cursor      = document.getElementById('cursor');
 const cursorTrail = document.getElementById('cursorTrail');
-let mx = 0, my = 0;
 
-document.addEventListener('mousemove', e => {
-  mx = e.clientX; my = e.clientY;
-  cursor.style.left = mx + 'px';
-  cursor.style.top  = my + 'px';
-  setTimeout(() => {
-    cursorTrail.style.left = mx + 'px';
-    cursorTrail.style.top  = my + 'px';
-  }, 80);
-});
+if (!isMobile() && cursor) {
+  let cx = 0, cy = 0, tx = 0, ty = 0;
+  document.addEventListener('mousemove', e => { cx = e.clientX; cy = e.clientY; }, { passive: true });
+  function animateCursor() {
+    cursor.style.left = cx + 'px';
+    cursor.style.top  = cy + 'px';
+    tx += (cx - tx) * 0.18;
+    ty += (cy - ty) * 0.18;
+    cursorTrail.style.left = tx + 'px';
+    cursorTrail.style.top  = ty + 'px';
+    requestAnimationFrame(animateCursor);
+  }
+  animateCursor();
+}
 
-/* ============================================================
-   NAV SCROLL
-   ============================================================ */
+/* ---- Nav scroll ---- */
 const nav = document.getElementById('nav');
 window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', window.scrollY > 40);
 }, { passive: true });
 
-/* ============================================================
-   MOBILE HAMBURGER
-   ============================================================ */
+/* ---- Mobile hamburger ---- */
 const hamburger = document.getElementById('hamburger');
 const navLinks  = document.getElementById('navLinks');
 hamburger.addEventListener('click', () => {
   hamburger.classList.toggle('open');
   navLinks.classList.toggle('open');
 });
-navLinks.querySelectorAll('.nav__link').forEach(link => {
+navLinks.querySelectorAll('.nav__link, .btn--hire').forEach(link => {
   link.addEventListener('click', () => {
     hamburger.classList.remove('open');
     navLinks.classList.remove('open');
   });
 });
 
-/* ============================================================
-   ACTIVE NAV ON SCROLL
-   ============================================================ */
+/* ---- Active nav on scroll (throttled) ---- */
 const sections   = document.querySelectorAll('section[id]');
 const navAnchors = document.querySelectorAll('.nav__link');
+let rafNav = false;
 window.addEventListener('scroll', () => {
-  let current = '';
-  sections.forEach(sec => {
-    if (window.scrollY >= sec.offsetTop - 120) current = sec.id;
-  });
-  navAnchors.forEach(a => {
-    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  if (rafNav) return;
+  rafNav = true;
+  requestAnimationFrame(() => {
+    let current = '';
+    sections.forEach(sec => {
+      if (window.scrollY >= sec.offsetTop - 120) current = sec.id;
+    });
+    navAnchors.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+    rafNav = false;
   });
 }, { passive: true });
 
-/* ============================================================
-   HERO TYPEWRITER
-   ============================================================ */
+/* ---- Hero typewriter ---- */
 const heroLine1 = document.getElementById('heroLine1');
-const words = ['Full Stack', 'Frontend', 'Backend', 'Full Stack'];
-let wIdx = 0, cIdx = 0, deleting = false;
-
-function typeWriter() {
-  const word = words[wIdx];
-  if (!deleting) {
-    heroLine1.textContent = word.slice(0, ++cIdx);
-    if (cIdx === word.length) { deleting = true; setTimeout(typeWriter, 1800); return; }
-  } else {
-    heroLine1.textContent = word.slice(0, --cIdx);
-    if (cIdx === 0) { deleting = false; wIdx = (wIdx + 1) % words.length; }
+if (heroLine1) {
+  const words = ['Full Stack', 'Frontend', 'Backend', 'Full Stack'];
+  let wIdx = 0, cIdx = 0, deleting = false;
+  function typeWriter() {
+    const word = words[wIdx];
+    if (!deleting) {
+      heroLine1.textContent = word.slice(0, ++cIdx);
+      if (cIdx === word.length) { deleting = true; setTimeout(typeWriter, 1800); return; }
+    } else {
+      heroLine1.textContent = word.slice(0, --cIdx);
+      if (cIdx === 0) { deleting = false; wIdx = (wIdx + 1) % words.length; }
+    }
+    setTimeout(typeWriter, deleting ? 55 : 95);
   }
-  setTimeout(typeWriter, deleting ? 55 : 95);
+  typeWriter();
 }
-typeWriter();
 
-/* ============================================================
-   MATRIX RAIN
-   ============================================================ */
+/* ---- Matrix rain (disabled on mobile, optimised on desktop) ---- */
 const canvas = document.getElementById('matrixCanvas');
-const ctx    = canvas.getContext('2d');
+if (canvas) {
+  if (isMobile()) {
+    // hide canvas on mobile — saves battery and removes lag
+    canvas.style.display = 'none';
+  } else {
+    const ctx = canvas.getContext('2d');
+    const FONT_SIZE = 13;
+    const CHARS = 'アイウエオカキクケコ0123456789ABCDEF{}[]<>/\\;:='.split('');
+    let drops = [];
 
-function resizeCanvas() {
-  canvas.width  = canvas.offsetWidth;
-  canvas.height = canvas.offsetHeight;
+    function resizeCanvas() {
+      canvas.width  = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+      drops = Array(Math.floor(canvas.width / FONT_SIZE)).fill(1);
+    }
+    resizeCanvas();
+
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(resizeCanvas, 200);
+    });
+
+    // Set font once outside the loop
+    ctx.font = FONT_SIZE + 'px "Fira Code", monospace';
+
+    let lastMatrix = 0;
+    function drawMatrix(ts) {
+      requestAnimationFrame(drawMatrix);
+      if (ts - lastMatrix < 80) return; // ~12fps — smooth enough, much less CPU
+      lastMatrix = ts;
+
+      ctx.fillStyle = 'rgba(13,17,23,0.05)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      for (let i = 0; i < drops.length; i++) {
+        const y = drops[i];
+        // head — bright
+        ctx.fillStyle = '#aaffaa';
+        ctx.fillText(CHARS[Math.random() * CHARS.length | 0], i * FONT_SIZE, y * FONT_SIZE);
+        // trail
+        ctx.fillStyle = '#3fb950';
+        if (y > 1) ctx.fillText(CHARS[Math.random() * CHARS.length | 0], i * FONT_SIZE, (y - 1) * FONT_SIZE);
+        if (y * FONT_SIZE > canvas.height && Math.random() > 0.975) drops[i] = 0;
+        drops[i]++;
+      }
+    }
+    requestAnimationFrame(drawMatrix);
+  }
 }
-resizeCanvas();
-window.addEventListener('resize', () => { resizeCanvas(); resetDrops(); });
 
-const chars   = 'アイウエオカキクケコサシスセソタチツテトナニヌネノ0123456789ABCDEF{}[]<>/\\;:=+-*&^%$#@!'.split('');
-const fontSize = 13;
-let drops = [];
-
-function resetDrops() {
-  const cols = Math.floor(canvas.width / fontSize);
-  drops = Array(cols).fill(1);
-}
-resetDrops();
-
-function drawMatrix() {
-  ctx.fillStyle = 'rgba(13,17,23,0.04)';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-  drops.forEach((y, i) => {
-    // bright head
-    ctx.fillStyle = '#aaffaa';
-    ctx.font = fontSize + 'px "Fira Code", monospace';
-    ctx.fillText(chars[Math.floor(Math.random() * chars.length)], i * fontSize, y * fontSize);
-    // trail
-    ctx.fillStyle = '#3fb950';
-    if (y > 1) ctx.fillText(chars[Math.floor(Math.random() * chars.length)], i * fontSize, (y - 1) * fontSize);
-    if (y * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
-    drops[i]++;
-  });
-}
-setInterval(drawMatrix, 45);
-
-/* ============================================================
-   SKILL TABS
-   ============================================================ */
+/* ---- Skill tabs ---- */
 document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('tab-btn--active'));
@@ -188,9 +202,7 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
   });
 });
 
-/* ============================================================
-   INTERSECTION OBSERVER — fade + bars + counters
-   ============================================================ */
+/* ---- Intersection observer (fade + bars + counters) ---- */
 const io = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (!entry.isIntersecting) return;
@@ -200,16 +212,16 @@ const io = new IntersectionObserver((entries) => {
     el.querySelectorAll('.stat__num').forEach(num => {
       const target = parseInt(num.dataset.target);
       let current = 0;
-      const step = Math.ceil(target / 50);
+      const step = Math.ceil(target / 40);
       const timer = setInterval(() => {
         current = Math.min(current + step, target);
         num.textContent = current;
         if (current >= target) clearInterval(timer);
-      }, 28);
+      }, 30);
     });
     io.unobserve(el);
   });
-}, { threshold: 0.12 });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
 document.querySelectorAll(
   '.fade-in, .skill-card, .project-card, .service-card, .testimonial-card, .pricing-card, .process__step, .about__left, .about__right, .about__stats'
@@ -221,44 +233,29 @@ window.addEventListener('load', () => {
   });
 });
 
-/* ============================================================
-   3D TILT ON PROJECT CARDS
-   ============================================================ */
-document.querySelectorAll('.tilt-card').forEach(card => {
-  card.addEventListener('mousemove', e => {
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const cx = rect.width  / 2;
-    const cy = rect.height / 2;
-    const rotX = ((y - cy) / cy) * -8;
-    const rotY = ((x - cx) / cx) *  8;
-    card.style.transform = `perspective(800px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale(1.02)`;
+/* ---- 3D tilt (desktop only) ---- */
+if (!isMobile()) {
+  document.querySelectorAll('.tilt-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const rect = card.getBoundingClientRect();
+      const rotX = (((e.clientY - rect.top)  / rect.height) - 0.5) * -12;
+      const rotY = (((e.clientX - rect.left) / rect.width)  - 0.5) *  12;
+      card.style.transform = `perspective(800px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale(1.02)`;
+    }, { passive: true });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+    });
   });
-  card.addEventListener('mouseleave', () => {
-    card.style.transform = 'perspective(800px) rotateX(0) rotateY(0) scale(1)';
-  });
-});
+}
 
-/* ============================================================
-   COMMAND PALETTE  (Ctrl+K)
-   ============================================================ */
+/* ---- Command palette (Ctrl+K) ---- */
 const cmdPalette = document.getElementById('cmdPalette');
 const cmdInput   = document.getElementById('cmdInput');
 const cmdItems   = document.querySelectorAll('.cmd-item');
 let selectedCmd  = -1;
 
-function openPalette() {
-  cmdPalette.classList.add('open');
-  cmdInput.value = '';
-  cmdInput.focus();
-  selectedCmd = -1;
-  filterCmds('');
-}
-function closePalette() {
-  cmdPalette.classList.remove('open');
-  selectedCmd = -1;
-}
+function openPalette()  { cmdPalette.classList.add('open'); cmdInput.value = ''; cmdInput.focus(); selectedCmd = -1; filterCmds(''); }
+function closePalette() { cmdPalette.classList.remove('open'); selectedCmd = -1; }
 function filterCmds(q) {
   cmdItems.forEach(item => {
     item.style.display = item.textContent.toLowerCase().includes(q.toLowerCase()) ? '' : 'none';
@@ -275,9 +272,8 @@ function executeCmd() {
   const visible = [...cmdItems].filter(i => i.style.display !== 'none');
   const target  = selectedCmd >= 0 ? visible[selectedCmd] : visible[0];
   if (!target) return;
-  const href = target.dataset.href;
   closePalette();
-  document.querySelector(href).scrollIntoView({ behavior: 'smooth' });
+  document.querySelector(target.dataset.href).scrollIntoView({ behavior: 'smooth' });
 }
 
 document.addEventListener('keydown', e => {
@@ -292,41 +288,35 @@ cmdInput.addEventListener('input', () => { filterCmds(cmdInput.value); selectedC
 cmdPalette.addEventListener('click', e => { if (e.target === cmdPalette) closePalette(); });
 cmdItems.forEach(item => {
   item.addEventListener('click', () => {
-    const href = item.dataset.href;
     closePalette();
-    document.querySelector(href).scrollIntoView({ behavior: 'smooth' });
+    document.querySelector(item.dataset.href).scrollIntoView({ behavior: 'smooth' });
   });
 });
 
-/* ============================================================
-   LIVE UPTIME COUNTER
-   ============================================================ */
-const uptimeEl = document.getElementById('uptime');
+/* ---- Live uptime ---- */
+const uptimeEl  = document.getElementById('uptime');
 const startTime = Date.now();
-function updateUptime() {
-  const s = Math.floor((Date.now() - startTime) / 1000);
-  const h = String(Math.floor(s / 3600)).padStart(2, '0');
-  const m = String(Math.floor((s % 3600) / 60)).padStart(2, '0');
-  const sec = String(s % 60).padStart(2, '0');
-  if (uptimeEl) uptimeEl.textContent = h + ':' + m + ':' + sec;
+if (uptimeEl) {
+  setInterval(() => {
+    const s   = Math.floor((Date.now() - startTime) / 1000);
+    const h   = String(Math.floor(s / 3600)).padStart(2, '0');
+    const m   = String(Math.floor((s % 3600) / 60)).padStart(2, '0');
+    const sec = String(s % 60).padStart(2, '0');
+    uptimeEl.textContent = h + ':' + m + ':' + sec;
+  }, 1000);
 }
-setInterval(updateUptime, 1000);
 
-/* ============================================================
-   KONAMI CODE EASTER EGG
-   ============================================================ */
+/* ---- Konami easter egg ---- */
 const konami = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
 let konamiIdx = 0;
 const toast = document.createElement('div');
 toast.className = 'konami-toast';
 toast.textContent = '🎉 CHEAT CODE ACTIVATED — you found the easter egg!';
 document.body.appendChild(toast);
-
 document.addEventListener('keydown', e => {
   if (cmdPalette && cmdPalette.classList.contains('open')) return;
   if (e.key === konami[konamiIdx]) {
-    konamiIdx++;
-    if (konamiIdx === konami.length) {
+    if (++konamiIdx === konami.length) {
       konamiIdx = 0;
       toast.classList.add('show');
       setTimeout(() => toast.classList.remove('show'), 3500);
@@ -334,140 +324,64 @@ document.addEventListener('keydown', e => {
   } else { konamiIdx = 0; }
 });
 
-/* ============================================================
-   CONTACT FORM
-   ============================================================ */
+/* ---- Contact form ---- */
 const contactForm = document.getElementById('contactForm');
 const contactBtn  = contactForm ? contactForm.querySelector('button[type="submit"]') : null;
-
 if (contactForm) {
   contactForm.addEventListener('submit', function(e) {
     e.preventDefault();
-
     const name    = this.elements['name'].value.trim();
     const email   = this.elements['email'].value.trim();
     const subject = this.elements['subject'].value.trim();
     const message = this.elements['message'].value.trim();
-
-    // Show sending state
-    if (contactBtn) {
-      contactBtn.textContent = '$ sending...';
-      contactBtn.disabled = true;
-    }
-
-    const to  = 'etes2533@gmail.com';
+    if (contactBtn) { contactBtn.textContent = '$ sending...'; contactBtn.disabled = true; }
     const sub = encodeURIComponent(subject + ' — from ' + name);
-    const bod = encodeURIComponent(
-      'Name: ' + name + '\n' +
-      'Email: ' + email + '\n\n' +
-      message
-    );
-
-    // Open Gmail compose in new tab — works for everyone, no email client needed
-    const gmailUrl = 'https://mail.google.com/mail/?view=cm&fs=1' +
-      '&to=' + encodeURIComponent(to) +
-      '&su=' + sub +
-      '&body=' + bod;
-
-    window.open(gmailUrl, '_blank', 'noopener');
-
-    // Show success feedback then reset
+    const bod = encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\n\n' + message);
+    window.open('https://mail.google.com/mail/?view=cm&fs=1&to=etes2533%40gmail.com&su=' + sub + '&body=' + bod, '_blank', 'noopener');
     setTimeout(() => {
-      if (contactBtn) {
-        contactBtn.textContent = '✓ opened in Gmail';
-        contactBtn.style.background = 'var(--green)';
-        contactBtn.style.color = 'var(--bg)';
-      }
+      if (contactBtn) { contactBtn.textContent = '✓ opened in Gmail'; contactBtn.style.background = 'var(--green)'; contactBtn.style.color = 'var(--bg)'; }
       setTimeout(() => {
         contactForm.reset();
-        if (contactBtn) {
-          contactBtn.textContent = '$ send --message';
-          contactBtn.style.background = '';
-          contactBtn.style.color = '';
-          contactBtn.disabled = false;
-        }
+        if (contactBtn) { contactBtn.textContent = '$ send --message'; contactBtn.style.background = ''; contactBtn.style.color = ''; contactBtn.disabled = false; }
       }, 3000);
     }, 500);
   });
 }
 
-/* ============================================================
-   CUSTOM PACKAGE BUILDER
-   ============================================================ */
+/* ---- Custom package builder ---- */
 (function () {
-  const checks   = document.querySelectorAll('.pkg-check');
-  const totalEl  = document.getElementById('pkgTotal');
-  const linesEl  = document.getElementById('resultLines');
-  const pkgCta   = document.getElementById('pkgCta');
-
+  const checks  = document.querySelectorAll('.pkg-check');
+  const totalEl = document.getElementById('pkgTotal');
+  const linesEl = document.getElementById('resultLines');
+  const pkgCta  = document.getElementById('pkgCta');
   if (!checks.length || !totalEl) return;
 
-  const labels = {
-    landing:    'landing_page',
-    responsive: 'responsive_design',
-    seo:        'seo_optimization',
-    contact_form:'contact_form',
-    backend:    'backend_api',
-    database:   'database_integration',
-    auth:       'user_authentication',
-    ecommerce:  'ecommerce_module',
-    admin:      'admin_dashboard',
-    deploy:     'cloud_deployment',
-    support:    'one_month_support',
-    source:     'full_source_code',
-  };
-
-  function fmt(n) {
-    return n.toLocaleString('en-ET');
-  }
+  const labels = { landing:'landing_page', responsive:'responsive_design', seo:'seo_optimization', contact_form:'contact_form', backend:'backend_api', database:'database_integration', auth:'user_authentication', ecommerce:'ecommerce_module', admin:'admin_dashboard', deploy:'cloud_deployment', support:'one_month_support', source:'full_source_code' };
+  const fmt = n => n.toLocaleString('en-ET');
 
   function update() {
     let total = 0;
     const selected = [];
-
     checks.forEach(cb => {
-      // sync the bool value in the label text
-      const labelSpan = cb.closest('.pkg-item').querySelector('.pkg-item__label .bool');
-      if (labelSpan) labelSpan.textContent = cb.checked ? 'true' : 'false';
-
-      if (cb.checked) {
-        total += parseInt(cb.dataset.price);
-        selected.push({ key: cb.dataset.key, price: parseInt(cb.dataset.price) });
-      }
+      const boolSpan = cb.closest('.pkg-item').querySelector('.pkg-item__label .bool');
+      if (boolSpan) boolSpan.textContent = cb.checked ? 'true' : 'false';
+      if (cb.checked) { total += +cb.dataset.price; selected.push({ key: cb.dataset.key, price: +cb.dataset.price }); }
     });
-
-    // Animate total
     totalEl.classList.remove('pop');
-    void totalEl.offsetWidth; // reflow
+    void totalEl.offsetWidth;
     totalEl.textContent = fmt(total);
     totalEl.classList.add('pop');
-
-    // Rebuild output lines
-    linesEl.innerHTML = '';
-    if (selected.length === 0) {
-      linesEl.innerHTML = '<p><span class="text--muted">// no features selected</span></p>';
-    } else {
-      selected.forEach(item => {
-        const p = document.createElement('p');
-        p.className = 'result__line--added';
-        p.innerHTML = `<span class="text--green">+</span> <span class="text--cyan">${labels[item.key] || item.key}</span> <span class="text--muted">// ETB ${fmt(item.price)}</span>`;
-        linesEl.appendChild(p);
-      });
+    linesEl.innerHTML = selected.length === 0
+      ? '<p><span class="text--muted">// no features selected</span></p>'
+      : selected.map(s => `<p class="result__line--added"><span class="text--green">+</span> <span class="text--cyan">${labels[s.key]||s.key}</span> <span class="text--muted">// ETB ${fmt(s.price)}</span></p>`).join('');
+    if (pkgCta) {
+      const names = selected.map(s => labels[s.key]||s.key).join(', ');
+      const su = encodeURIComponent('Custom Package — ETB ' + fmt(total));
+      const bo = encodeURIComponent('Hi Edlawit,\n\nSelected features:\n' + names + '\n\nEstimate: ETB ' + fmt(total) + '\n\nPlease send a final quote.');
+      pkgCta.href = 'https://mail.google.com/mail/?view=cm&fs=1&to=etes2533%40gmail.com&su=' + su + '&body=' + bo;
+      pkgCta.target = '_blank'; pkgCta.rel = 'noopener';
     }
-
-    // Update CTA href to pre-fill contact subject
-    const names = selected.map(s => labels[s.key] || s.key).join(', ');
-    const subject = encodeURIComponent(`Custom Package Inquiry — ETB ${fmt(total)}`);
-    const body    = encodeURIComponent(`Hi Edlawit,\n\nI used the package builder and selected:\n${names}\n\nEstimated total: ETB ${fmt(total)}\n\nPlease send me a final quote.`);
-    const gmailUrl = 'https://mail.google.com/mail/?view=cm&fs=1' +
-      '&to=' + encodeURIComponent('etes2533@gmail.com') +
-      '&su=' + subject +
-      '&body=' + body;
-    pkgCta.href = gmailUrl;
-    pkgCta.target = '_blank';
-    pkgCta.rel = 'noopener';
   }
-
   checks.forEach(cb => cb.addEventListener('change', update));
-  update(); // run on load
+  update();
 })();
