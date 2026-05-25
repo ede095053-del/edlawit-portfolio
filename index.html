@@ -1,0 +1,775 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Edlawit Damana Tesfaye - Full Stack Web Developer from Addis Ababa, Ethiopia">
+  <title>Edlawit Damana | Full Stack Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="custom-cursor" id="cursor"></div>
+  <div class="cursor-trail" id="cursorTrail"></div>
+  <div class="scanlines"></div>
+
+  <!-- BOOT SCREEN -->
+  <div class="boot-screen" id="bootScreen">
+    <div class="boot-content">
+      <pre class="boot-text" id="bootText"></pre>
+      <div class="boot-bar-wrap"><div class="boot-bar" id="bootBar"></div></div>
+    </div>
+  </div>
+
+  <!-- COMMAND PALETTE -->
+  <div class="cmd-palette" id="cmdPalette">
+    <div class="cmd-palette__inner">
+      <div class="cmd-palette__header">
+        <span class="text--muted">// command_palette</span>
+        <span class="cmd-palette__hint">ESC to close</span>
+      </div>
+      <input class="cmd-palette__input" id="cmdInput" placeholder="> type a command..." autocomplete="off" spellcheck="false" />
+      <ul class="cmd-palette__list" id="cmdList">
+        <li class="cmd-item" data-href="#home">     <span class="text--green">goto</span> <span class="text--cyan">home</span></li>
+        <li class="cmd-item" data-href="#about">    <span class="text--green">goto</span> <span class="text--cyan">about</span></li>
+        <li class="cmd-item" data-href="#skills">   <span class="text--green">goto</span> <span class="text--cyan">skills</span></li>
+        <li class="cmd-item" data-href="#projects"> <span class="text--green">goto</span> <span class="text--cyan">projects</span></li>
+        <li class="cmd-item" data-href="#services"> <span class="text--green">goto</span> <span class="text--cyan">services</span></li>
+        <li class="cmd-item" data-href="#pricing">  <span class="text--green">goto</span> <span class="text--cyan">pricing</span></li>
+        <li class="cmd-item" data-href="#custom">   <span class="text--green">goto</span> <span class="text--cyan">custom_package</span></li>
+        <li class="cmd-item" data-href="#contact">  <span class="text--green">goto</span> <span class="text--cyan">contact</span></li>
+      </ul>
+      <p class="cmd-palette__footer"><span class="text--muted">Ctrl+K</span> to open · <span class="text--muted">↑↓</span> navigate · <span class="text--muted">Enter</span> select</p>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav__container">
+      <a href="#" class="nav__logo">
+        <svg class="nav__hex" viewBox="0 0 60 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="30,2 58,17 58,35 30,50 2,35 2,17" stroke="#3fb950" stroke-width="2" fill="#0d1117"/>
+          <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" fill="#3fb950" font-family="Fira Code" font-size="18" font-weight="700">E</text>
+        </svg>
+        <span class="nav__logo-text glitch" data-text="edlawit.dev">edlawit.dev</span>
+      </a>
+      <ul class="nav__links" id="navLinks">
+        <li><a href="#about" class="nav__link">About</a></li>
+        <li><a href="#skills" class="nav__link">Skills</a></li>
+        <li><a href="#projects" class="nav__link">Projects</a></li>
+        <li><a href="#services" class="nav__link">Services</a></li>
+        <li><a href="#process" class="nav__link">Process</a></li>
+        <li><a href="#pricing" class="nav__link">Pricing</a></li>
+        <li><a href="#custom" class="nav__link">Custom</a></li>
+        <li><a href="#contact" class="nav__link">Contact</a></li>
+        <li><a href="#contact" class="btn btn--hire">Hire Me</a></li>
+      </ul>
+      <button class="nav__hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- TICKER -->
+  <div class="ticker" id="ticker">
+    <div class="ticker__track">
+      <span class="ticker__item"><span class="ticker__prompt">$</span> HTML5</span>
+      <span class="ticker__sep">|</span>
+      <span class="ticker__item"><span class="ticker__prompt">$</span> CSS3</span>
+      <span class="ticker__sep">|</span>
+      <span class="ticker__item"><span class="ticker__prompt">$</span> JavaScript</span>
+      <span class="ticker__sep">|</span>
+      <span class="ticker__item"><span class="ticker__prompt">$</span> Node.js</span>
+      <span class="ticker__sep">|</span>
+      <span class="ticker__item"><span class="ticker__prompt">$</span> Java</span>
+      <span class="ticker__sep">|</span>
+      <span class="ticker__item"><span class="ticker__prompt">$</span> Python</span>
+      <span class="ticker__sep">|</span>
+      <span class="ticker__item"><span class="ticker__prompt">$</span> REST APIs</span>
+      <span class="ticker__sep">|</span>
+      <span class="ticker__item"><span class="ticker__prompt">$</span> Git</span>
+      <span class="ticker__sep">|</span>
+      <span class="ticker__item"><span class="ticker__prompt">$</span> Cloud Deploy</span>
+      <span class="ticker__sep">|</span>
+      <span class="ticker__item"><span class="ticker__prompt">$</span> UI/UX</span>
+      <span class="ticker__sep">|</span>
+      <span class="ticker__item"><span class="ticker__prompt">$</span> Full Stack Dev</span>
+      <span class="ticker__sep">|</span>
+      <span class="ticker__item"><span class="ticker__prompt">$</span> HTML5</span>
+      <span class="ticker__sep">|</span>
+      <span class="ticker__item"><span class="ticker__prompt">$</span> CSS3</span>
+      <span class="ticker__sep">|</span>
+      <span class="ticker__item"><span class="ticker__prompt">$</span> JavaScript</span>
+      <span class="ticker__sep">|</span>
+      <span class="ticker__item"><span class="ticker__prompt">$</span> Node.js</span>
+      <span class="ticker__sep">|</span>
+      <span class="ticker__item"><span class="ticker__prompt">$</span> Java</span>
+      <span class="ticker__sep">|</span>
+      <span class="ticker__item"><span class="ticker__prompt">$</span> Python</span>
+      <span class="ticker__sep">|</span>
+      <span class="ticker__item"><span class="ticker__prompt">$</span> REST APIs</span>
+      <span class="ticker__sep">|</span>
+      <span class="ticker__item"><span class="ticker__prompt">$</span> Git</span>
+      <span class="ticker__sep">|</span>
+      <span class="ticker__item"><span class="ticker__prompt">$</span> Cloud Deploy</span>
+      <span class="ticker__sep">|</span>
+      <span class="ticker__item"><span class="ticker__prompt">$</span> UI/UX</span>
+      <span class="ticker__sep">|</span>
+      <span class="ticker__item"><span class="ticker__prompt">$</span> Full Stack Dev</span>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <canvas class="hero__matrix" id="matrixCanvas" style="position:absolute;inset:0;width:100%;height:100%"></canvas>
+    <div class="hero__container">
+      <!-- Terminal Window -->
+      <div class="hero__terminal fade-in">
+        <div class="terminal__header">
+          <div class="terminal__dots">
+            <span class="dot dot--red"></span>
+            <span class="dot dot--yellow"></span>
+            <span class="dot dot--green"></span>
+          </div>
+          <span class="terminal__filename">portfolio.js</span>
+        </div>
+        <div class="terminal__body">
+          <pre class="code-block"><code><span class="kw">const</span> <span class="var">developer</span> <span class="op">=</span> {
+  <span class="prop">name</span><span class="op">:</span> <span class="str">"Edlawit Damana"</span><span class="op">,</span>
+  <span class="prop">role</span><span class="op">:</span> <span class="str">"Full Stack Developer"</span><span class="op">,</span>
+  <span class="prop">location</span><span class="op">:</span> <span class="str">"Addis Ababa &#127466;&#127481;"</span><span class="op">,</span>
+  <span class="prop">skills</span><span class="op">:</span> [<span class="str">"HTML"</span><span class="op">,</span><span class="str">"CSS"</span><span class="op">,</span><span class="str">"JS"</span><span class="op">,</span><span class="str">"Java"</span><span class="op">,</span><span class="str">"Node.js"</span><span class="op">,</span><span class="str">"Python"</span>]<span class="op">,</span>
+  <span class="prop">experience</span><span class="op">:</span> <span class="str">"2+ years"</span><span class="op">,</span>
+  <span class="prop">available</span><span class="op">:</span> <span class="bool">true</span><span class="op">,</span>
+  <span class="prop">build</span><span class="op">:</span> <span class="kw">()</span> <span class="op">=&gt;</span> <span class="str">"amazing things &#128640;"</span>
+};</code></pre>
+        </div>
+      </div>
+
+      <!-- Hero Content -->
+      <div class="hero__content fade-in">
+        <div class="hero__available">
+          <span class="available__dot"></span>
+          <span class="available__text">available for work</span>
+        </div>
+        <h1 class="hero__heading">
+          <span class="hero__line1" id="heroLine1"></span>
+          <span class="hero__line2 text--green">Web Developer</span>
+        </h1>
+        <p class="hero__sub">Building scalable, performant web applications from front to back. Clean code. Real results.</p>
+        <div class="hero__cta">
+          <a href="#projects" class="btn btn--primary">View Projects</a>
+          <a href="#contact" class="btn btn--ghost">Let&apos;s Talk</a>
+        </div>
+        <div class="hero__pills">
+          <span class="pill">HTML5</span>
+          <span class="pill">CSS3</span>
+          <span class="pill">JavaScript</span>
+          <span class="pill">Node.js</span>
+          <span class="pill">Java</span>
+          <span class="pill">Python</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about section" id="about">
+    <div class="container">
+      <div class="about__grid">
+        <div class="about__left fade-in">
+          <p class="section__comment">/* about me */</p>
+          <h2 class="section__heading">Crafting Digital<br><span class="text--green">Experiences</span></h2>
+          <p class="about__text">I am Edlawit Damana Tesfaye, a self-driven Full Stack Web Developer based in Addis Ababa, Ethiopia. I build end-to-end web solutions — from pixel-perfect frontends to robust, scalable backends — with a passion for clean code and meaningful user experiences.</p>
+          <p class="about__text">With 2+ years of hands-on experience, I have delivered projects ranging from e-commerce platforms to storytelling apps, always pushing for performance, accessibility, and maintainability. I thrive in collaborative environments and love turning complex problems into elegant solutions.</p>
+          <div class="about__stats">
+            <div class="stat">
+              <span class="stat__num" data-target="2">0</span><span class="stat__plus">+</span>
+              <span class="stat__label">Years Experience</span>
+            </div>
+            <div class="stat">
+              <span class="stat__num" data-target="10">0</span><span class="stat__plus">+</span>
+              <span class="stat__label">Projects Delivered</span>
+            </div>
+            <div class="stat">
+              <span class="stat__num" data-target="100">0</span><span class="stat__plus">%</span>
+              <span class="stat__label">Commitment</span>
+            </div>
+          </div>
+        </div>
+        <div class="about__right fade-in">
+          <div class="profile-card">
+            <div class="terminal__header">
+              <div class="terminal__dots">
+                <span class="dot dot--red"></span>
+                <span class="dot dot--yellow"></span>
+                <span class="dot dot--green"></span>
+              </div>
+              <span class="terminal__filename">profile.json</span>
+            </div>
+            <div class="profile-card__body">
+              <pre class="code-block"><code>{
+  <span class="prop">"name"</span><span class="op">:</span> <span class="str">"Edlawit Damana Tesfaye"</span><span class="op">,</span>
+  <span class="prop">"role"</span><span class="op">:</span> <span class="str">"Full Stack Developer"</span><span class="op">,</span>
+  <span class="prop">"location"</span><span class="op">:</span> <span class="str">"Addis Ababa, Ethiopia"</span><span class="op">,</span>
+  <span class="prop">"email"</span><span class="op">:</span> <span class="str">"edlawitdamana@gmail.com"</span><span class="op">,</span>
+  <span class="prop">"languages"</span><span class="op">:</span> [
+    <span class="str">"Amharic"</span><span class="op">,</span>
+    <span class="str">"English"</span>
+  ]<span class="op">,</span>
+  <span class="prop">"status"</span><span class="op">:</span> <span class="str">"open_to_work"</span>
+}</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="skills section" id="skills">
+    <div class="container">
+      <p class="section__label">// tech_stack</p>
+      <h2 class="section__heading">Technical <span class="text--green">Skills</span></h2>
+      <div class="skills__tabs">
+        <button class="tab-btn tab-btn--active" data-tab="frontend">frontend.js</button>
+        <button class="tab-btn" data-tab="backend">backend.js</button>
+        <button class="tab-btn" data-tab="tools">tools.js</button>
+      </div>
+      <div class="skills__panel" id="tab-frontend">
+        <div class="skills__grid">
+          <div class="skill-card fade-in"><div class="skill-card__header"><span class="kw">const</span> <span class="var">HTML5</span> <span class="op">=</span> {</div><div class="skill-card__bar"><div class="skill-bar" data-width="92"></div></div><div class="skill-card__footer">}; <span class="comment">// 92%</span></div></div>
+          <div class="skill-card fade-in"><div class="skill-card__header"><span class="kw">const</span> <span class="var">CSS3</span> <span class="op">=</span> {</div><div class="skill-card__bar"><div class="skill-bar" data-width="88"></div></div><div class="skill-card__footer">}; <span class="comment">// 88%</span></div></div>
+          <div class="skill-card fade-in"><div class="skill-card__header"><span class="kw">const</span> <span class="var">JavaScript</span> <span class="op">=</span> {</div><div class="skill-card__bar"><div class="skill-bar" data-width="85"></div></div><div class="skill-card__footer">}; <span class="comment">// 85%</span></div></div>
+          <div class="skill-card fade-in"><div class="skill-card__header"><span class="kw">const</span> <span class="var">React</span> <span class="op">=</span> {</div><div class="skill-card__bar"><div class="skill-bar" data-width="75"></div></div><div class="skill-card__footer">}; <span class="comment">// 75%</span></div></div>
+          <div class="skill-card fade-in"><div class="skill-card__header"><span class="kw">const</span> <span class="var">Responsive_Design</span> <span class="op">=</span> {</div><div class="skill-card__bar"><div class="skill-bar" data-width="90"></div></div><div class="skill-card__footer">}; <span class="comment">// 90%</span></div></div>
+          <div class="skill-card fade-in"><div class="skill-card__header"><span class="kw">const</span> <span class="var">UI_UX</span> <span class="op">=</span> {</div><div class="skill-card__bar"><div class="skill-bar" data-width="80"></div></div><div class="skill-card__footer">}; <span class="comment">// 80%</span></div></div>
+        </div>
+      </div>
+      <div class="skills__panel hidden" id="tab-backend">
+        <div class="skills__grid">
+          <div class="skill-card fade-in"><div class="skill-card__header"><span class="kw">const</span> <span class="var">Node_js</span> <span class="op">=</span> {</div><div class="skill-card__bar"><div class="skill-bar" data-width="82"></div></div><div class="skill-card__footer">}; <span class="comment">// 82%</span></div></div>
+          <div class="skill-card fade-in"><div class="skill-card__header"><span class="kw">const</span> <span class="var">Java</span> <span class="op">=</span> {</div><div class="skill-card__bar"><div class="skill-bar" data-width="78"></div></div><div class="skill-card__footer">}; <span class="comment">// 78%</span></div></div>
+          <div class="skill-card fade-in"><div class="skill-card__header"><span class="kw">const</span> <span class="var">Python</span> <span class="op">=</span> {</div><div class="skill-card__bar"><div class="skill-bar" data-width="75"></div></div><div class="skill-card__footer">}; <span class="comment">// 75%</span></div></div>
+          <div class="skill-card fade-in"><div class="skill-card__header"><span class="kw">const</span> <span class="var">REST_APIs</span> <span class="op">=</span> {</div><div class="skill-card__bar"><div class="skill-bar" data-width="85"></div></div><div class="skill-card__footer">}; <span class="comment">// 85%</span></div></div>
+          <div class="skill-card fade-in"><div class="skill-card__header"><span class="kw">const</span> <span class="var">MongoDB</span> <span class="op">=</span> {</div><div class="skill-card__bar"><div class="skill-bar" data-width="72"></div></div><div class="skill-card__footer">}; <span class="comment">// 72%</span></div></div>
+          <div class="skill-card fade-in"><div class="skill-card__header"><span class="kw">const</span> <span class="var">SQL</span> <span class="op">=</span> {</div><div class="skill-card__bar"><div class="skill-bar" data-width="70"></div></div><div class="skill-card__footer">}; <span class="comment">// 70%</span></div></div>
+        </div>
+      </div>
+      <div class="skills__panel hidden" id="tab-tools">
+        <div class="skills__grid">
+          <div class="skill-card fade-in"><div class="skill-card__header"><span class="kw">const</span> <span class="var">Git</span> <span class="op">=</span> {</div><div class="skill-card__bar"><div class="skill-bar" data-width="88"></div></div><div class="skill-card__footer">}; <span class="comment">// 88%</span></div></div>
+          <div class="skill-card fade-in"><div class="skill-card__header"><span class="kw">const</span> <span class="var">GitHub</span> <span class="op">=</span> {</div><div class="skill-card__bar"><div class="skill-bar" data-width="85"></div></div><div class="skill-card__footer">}; <span class="comment">// 85%</span></div></div>
+          <div class="skill-card fade-in"><div class="skill-card__header"><span class="kw">const</span> <span class="var">Cloud_Deploy</span> <span class="op">=</span> {</div><div class="skill-card__bar"><div class="skill-bar" data-width="75"></div></div><div class="skill-card__footer">}; <span class="comment">// 75%</span></div></div>
+          <div class="skill-card fade-in"><div class="skill-card__header"><span class="kw">const</span> <span class="var">VS_Code</span> <span class="op">=</span> {</div><div class="skill-card__bar"><div class="skill-bar" data-width="95"></div></div><div class="skill-card__footer">}; <span class="comment">// 95%</span></div></div>
+          <div class="skill-card fade-in"><div class="skill-card__header"><span class="kw">const</span> <span class="var">Figma</span> <span class="op">=</span> {</div><div class="skill-card__bar"><div class="skill-bar" data-width="70"></div></div><div class="skill-card__footer">}; <span class="comment">// 70%</span></div></div>
+          <div class="skill-card fade-in"><div class="skill-card__header"><span class="kw">const</span> <span class="var">Linux</span> <span class="op">=</span> {</div><div class="skill-card__bar"><div class="skill-bar" data-width="72"></div></div><div class="skill-card__footer">}; <span class="comment">// 72%</span></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="projects section" id="projects">
+    <div class="container">
+      <p class="section__label">// selected_work</p>
+      <h2 class="section__heading">Featured <span class="text--green">Projects</span></h2>
+      <div class="projects__grid">
+
+        <!-- EthioMarket -->
+        <div class="project-card fade-in tilt-card">
+          <div class="terminal__header">
+            <div class="terminal__dots">
+              <span class="dot dot--red"></span>
+              <span class="dot dot--yellow"></span>
+              <span class="dot dot--green"></span>
+            </div>
+            <span class="terminal__filename">ethiomarket.js</span>
+          </div>
+          <div class="project-card__body">
+            <h3 class="project-card__title"><span class="text--cyan">EthioMarket</span></h3>
+            <p class="project-card__desc"><span class="comment">// Ethiopian e-commerce platform connecting local vendors with customers nationwide. Features product listings, cart, and secure checkout.</span></p>
+            <div class="project-card__imports">
+              <p><span class="kw">import</span> { <span class="var">HTML5</span>, <span class="var">CSS3</span>, <span class="var">JavaScript</span> } <span class="kw">from</span> <span class="str">&apos;./stack&apos;</span>;</p>
+              <p><span class="kw">import</span> { <span class="var">Node_js</span>, <span class="var">MongoDB</span> } <span class="kw">from</span> <span class="str">&apos;./backend&apos;</span>;</p>
+            </div>
+            <a href="https://ethiomarket-mfe3.onrender.com" target="_blank" rel="noopener" class="btn btn--ghost btn--sm">$ open --live-site</a>
+          </div>
+        </div>
+
+        <!-- Qalat Stories -->
+        <div class="project-card fade-in tilt-card">
+          <div class="terminal__header">
+            <div class="terminal__dots">
+              <span class="dot dot--red"></span>
+              <span class="dot dot--yellow"></span>
+              <span class="dot dot--green"></span>
+            </div>
+            <span class="terminal__filename">qalat-stories.js</span>
+          </div>
+          <div class="project-card__body">
+            <h3 class="project-card__title"><span class="text--cyan">Qalat Stories</span></h3>
+            <p class="project-card__desc"><span class="comment">// A digital storytelling platform celebrating Ethiopian narratives, folklore, and creative writing in Amharic and English.</span></p>
+            <div class="project-card__imports">
+              <p><span class="kw">import</span> { <span class="var">HTML5</span>, <span class="var">CSS3</span> } <span class="kw">from</span> <span class="str">&apos;./stack&apos;</span>;</p>
+              <p><span class="kw">import</span> { <span class="var">JavaScript</span>, <span class="var">Node_js</span> } <span class="kw">from</span> <span class="str">&apos;./backend&apos;</span>;</p>
+            </div>
+            <a href="https://qalat-stories.onrender.com" target="_blank" rel="noopener" class="btn btn--ghost btn--sm">$ open --live-site</a>
+          </div>
+        </div>
+
+        <!-- Afrochella -->
+        <div class="project-card fade-in tilt-card">
+          <div class="terminal__header">
+            <div class="terminal__dots">
+              <span class="dot dot--red"></span>
+              <span class="dot dot--yellow"></span>
+              <span class="dot dot--green"></span>
+            </div>
+            <span class="terminal__filename">afrochella.js</span>
+          </div>
+          <div class="project-card__body">
+            <h3 class="project-card__title"><span class="text--cyan">Afrochella Festival</span></h3>
+            <p class="project-card__desc"><span class="comment">// Festival website for Afrochella — Africa&apos;s premier creative arts and music festival. Event info, lineup, and ticket booking.</span></p>
+            <div class="project-card__imports">
+              <p><span class="kw">import</span> { <span class="var">HTML5</span>, <span class="var">CSS3</span>, <span class="var">JavaScript</span> } <span class="kw">from</span> <span class="str">&apos;./stack&apos;</span>;</p>
+              <p><span class="kw">import</span> { <span class="var">REST_API</span> } <span class="kw">from</span> <span class="str">&apos;./backend&apos;</span>;</p>
+            </div>
+            <a href="https://afrochella.onrender.com" target="_blank" rel="noopener" class="btn btn--ghost btn--sm">$ open --live-site</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services section" id="services">
+    <div class="container">
+      <p class="section__label">// services</p>
+      <h2 class="section__heading">What I <span class="text--green">Build</span></h2>
+      <div class="services__grid">
+
+        <div class="service-card fade-in">
+          <div class="service-card__sig">
+            <span class="kw">function</span> <span class="fn">frontendDev</span><span class="op">()</span> {
+          </div>
+          <div class="service-card__body">
+            <p class="comment">/*
+             * Responsive, accessible UIs
+             * built with HTML, CSS, JS.
+             * Pixel-perfect from any design.
+             */</p>
+          </div>
+          <div class="service-card__close">}</div>
+        </div>
+
+        <div class="service-card fade-in">
+          <div class="service-card__sig">
+            <span class="kw">function</span> <span class="fn">backendDev</span><span class="op">()</span> {
+          </div>
+          <div class="service-card__body">
+            <p class="comment">/*
+             * Scalable APIs and server logic
+             * with Node.js, Java, Python.
+             * Secure, fast, maintainable.
+             */</p>
+          </div>
+          <div class="service-card__close">}</div>
+        </div>
+
+        <div class="service-card fade-in">
+          <div class="service-card__sig">
+            <span class="kw">function</span> <span class="fn">fullDelivery</span><span class="op">()</span> {
+          </div>
+          <div class="service-card__body">
+            <p class="comment">/*
+             * End-to-end web apps from
+             * concept to cloud deployment.
+             * One dev, full ownership.
+             */</p>
+          </div>
+          <div class="service-card__close">}</div>
+        </div>
+
+        <div class="service-card fade-in">
+          <div class="service-card__sig">
+            <span class="kw">function</span> <span class="fn">ecommerce</span><span class="op">()</span> {
+          </div>
+          <div class="service-card__body">
+            <p class="comment">/*
+             * Custom online stores with
+             * product management, cart,
+             * and payment integration.
+             */</p>
+          </div>
+          <div class="service-card__close">}</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="process section" id="process">
+    <div class="container">
+      <p class="section__label">// how_i_work</p>
+      <h2 class="section__heading">My <span class="text--green">Process</span></h2>
+      <div class="process__steps">
+
+        <div class="process__step fade-in">
+          <div class="process__dot"></div>
+          <div class="process__content">
+            <p class="process__cmd"><span class="text--green">$</span> <span class="text--cyan">step_01</span>: <span class="text--orange">discovery</span></p>
+            <p class="process__desc">Deep dive into your goals, audience, and requirements. We align on vision before writing a single line of code.</p>
+          </div>
+        </div>
+
+        <div class="process__step fade-in">
+          <div class="process__dot"></div>
+          <div class="process__content">
+            <p class="process__cmd"><span class="text--green">$</span> <span class="text--cyan">step_02</span>: <span class="text--orange">design_and_plan</span></p>
+            <p class="process__desc">Wireframes, architecture planning, and tech stack selection. A solid blueprint means fewer surprises during build.</p>
+          </div>
+        </div>
+
+        <div class="process__step fade-in">
+          <div class="process__dot"></div>
+          <div class="process__content">
+            <p class="process__cmd"><span class="text--green">$</span> <span class="text--cyan">step_03</span>: <span class="text--orange">build</span></p>
+            <p class="process__desc">Clean, documented code with regular check-ins. Frontend, backend, and integrations built iteratively with your feedback.</p>
+          </div>
+        </div>
+
+        <div class="process__step fade-in">
+          <div class="process__dot"></div>
+          <div class="process__content">
+            <p class="process__cmd"><span class="text--green">$</span> <span class="text--cyan">step_04</span>: <span class="text--orange">launch_and_support</span></p>
+            <p class="process__desc">Deployment to production, performance testing, and post-launch support. Your project goes live and stays live.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials section" id="testimonials">
+    <div class="container">
+      <p class="section__label">// client_reviews</p>
+      <h2 class="section__heading">What Clients <span class="text--green">Say</span></h2>
+      <div class="testimonials__grid">
+
+        <div class="testimonial-card fade-in">
+          <div class="testimonial-card__header">
+            <span class="commit__hash text--muted">commit a3f9c12</span>
+            <div class="testimonial-card__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          </div>
+          <p class="testimonial-card__quote"><span class="comment">/* Edlawit delivered our e-commerce platform ahead of schedule. The code quality was exceptional and she communicated clearly throughout the entire project. */</span></p>
+          <div class="testimonial-card__author">
+            <span class="text--cyan">Yonas Bekele</span>
+            <span class="text--muted"> — Founder, EthioShop</span>
+          </div>
+        </div>
+
+        <div class="testimonial-card fade-in">
+          <div class="testimonial-card__header">
+            <span class="commit__hash text--muted">commit b7d2e45</span>
+            <div class="testimonial-card__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          </div>
+          <p class="testimonial-card__quote"><span class="comment">/* Working with Edlawit was a great experience. She understood our vision for Qalat Stories and built exactly what we needed — fast, clean, and beautiful. */</span></p>
+          <div class="testimonial-card__author">
+            <span class="text--cyan">Meron Haile</span>
+            <span class="text--muted"> — Co-founder, Qalat Stories</span>
+          </div>
+        </div>
+
+        <div class="testimonial-card fade-in">
+          <div class="testimonial-card__header">
+            <span class="commit__hash text--muted">commit c1a8f77</span>
+            <div class="testimonial-card__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          </div>
+          <p class="testimonial-card__quote"><span class="comment">/* Highly professional and technically skilled. Edlawit built our festival site with attention to every detail. We will definitely work together again. */</span></p>
+          <div class="testimonial-card__author">
+            <span class="text--cyan">Dawit Girma</span>
+            <span class="text--muted"> — Event Director, Afrochella</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="pricing section" id="pricing">
+    <div class="container">
+      <p class="section__label">// pricing_plans</p>
+      <h2 class="section__heading">Transparent <span class="text--green">Pricing</span></h2>
+      <div class="pricing__grid">
+
+        <!-- Starter -->
+        <div class="pricing-card fade-in">
+          <pre class="code-block pricing-code"><code>{
+  <span class="prop">"plan"</span><span class="op">:</span> <span class="str">"starter"</span><span class="op">,</span>
+  <span class="prop">"price"</span><span class="op">:</span> <span class="num">8500</span><span class="op">,</span>
+  <span class="prop">"currency"</span><span class="op">:</span> <span class="str">"ETB"</span><span class="op">,</span>
+  <span class="prop">"ideal_for"</span><span class="op">:</span> <span class="str">"small projects"</span>
+}</code></pre>
+          <ul class="pricing-card__features">
+            <li class="feature--yes">&#10003; Landing Page (up to 5 sections)</li>
+            <li class="feature--yes">&#10003; Responsive Design</li>
+            <li class="feature--yes">&#10003; Contact Form</li>
+            <li class="feature--yes">&#10003; Basic SEO</li>
+            <li class="feature--no">&#10007; Backend / Database</li>
+            <li class="feature--no">&#10007; Custom Functionality</li>
+            <li class="feature--no">&#10007; E-commerce</li>
+          </ul>
+          <a href="#contact" class="btn btn--ghost btn--full">$ contact --plan=starter</a>
+        </div>
+
+        <!-- Professional (featured) -->
+        <div class="pricing-card pricing-card--featured fade-in">
+          <div class="pricing-card__badge">// popular</div>
+          <pre class="code-block pricing-code"><code>{
+  <span class="prop">"plan"</span><span class="op">:</span> <span class="str">"professional"</span><span class="op">,</span>
+  <span class="prop">"price"</span><span class="op">:</span> <span class="num">22000</span><span class="op">,</span>
+  <span class="prop">"currency"</span><span class="op">:</span> <span class="str">"ETB"</span><span class="op">,</span>
+  <span class="prop">"ideal_for"</span><span class="op">:</span> <span class="str">"growing businesses"</span>
+}</code></pre>
+          <ul class="pricing-card__features">
+            <li class="feature--yes">&#10003; Multi-page Website</li>
+            <li class="feature--yes">&#10003; Responsive Design</li>
+            <li class="feature--yes">&#10003; Backend + Database</li>
+            <li class="feature--yes">&#10003; REST API Integration</li>
+            <li class="feature--yes">&#10003; Admin Dashboard</li>
+            <li class="feature--yes">&#10003; Cloud Deployment</li>
+            <li class="feature--no">&#10007; E-commerce Module</li>
+          </ul>
+          <a href="#contact" class="btn btn--primary btn--full">$ contact --plan=professional</a>
+        </div>
+
+        <!-- Full Stack -->
+        <div class="pricing-card fade-in">
+          <pre class="code-block pricing-code"><code>{
+  <span class="prop">"plan"</span><span class="op">:</span> <span class="str">"full_stack"</span><span class="op">,</span>
+  <span class="prop">"price"</span><span class="op">:</span> <span class="num">45000</span><span class="op">,</span>
+  <span class="prop">"currency"</span><span class="op">:</span> <span class="str">"ETB"</span><span class="op">,</span>
+  <span class="prop">"ideal_for"</span><span class="op">:</span> <span class="str">"full products"</span>
+}</code></pre>
+          <ul class="pricing-card__features">
+            <li class="feature--yes">&#10003; Full Web Application</li>
+            <li class="feature--yes">&#10003; Custom Backend + DB</li>
+            <li class="feature--yes">&#10003; E-commerce + Payments</li>
+            <li class="feature--yes">&#10003; Auth + User Roles</li>
+            <li class="feature--yes">&#10003; Cloud Deployment</li>
+            <li class="feature--yes">&#10003; 1 Month Post-launch Support</li>
+            <li class="feature--yes">&#10003; Full Source Code</li>
+          </ul>
+          <a href="#contact" class="btn btn--ghost btn--full">$ contact --plan=full_stack</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CUSTOM PACKAGE -->
+  <section class="custom-pkg section" id="custom">
+    <div class="container">
+      <p class="section__label">// build_your_package</p>
+      <h2 class="section__heading">Customize Your <span class="text--green">Package</span></h2>
+      <p class="custom-pkg__sub"><span class="comment">/* Select the features you need and get an instant estimate */</span></p>
+
+      <div class="custom-pkg__layout">
+
+        <!-- Feature Checklist -->
+        <div class="custom-pkg__features fade-in">
+          <div class="terminal__header">
+            <div class="terminal__dots">
+              <span class="dot dot--red"></span>
+              <span class="dot dot--yellow"></span>
+              <span class="dot dot--green"></span>
+            </div>
+            <span class="terminal__filename">package.config.js</span>
+          </div>
+          <div class="custom-pkg__body">
+            <p class="custom-pkg__group-label"><span class="kw">const</span> <span class="var">base</span> <span class="op">=</span> {</p>
+            <label class="pkg-item">
+              <input type="checkbox" class="pkg-check" data-price="3000" data-key="landing" checked>
+              <span class="pkg-item__box"></span>
+              <span class="pkg-item__label"><span class="prop">landing_page</span><span class="op">:</span> <span class="bool">true</span></span>
+              <span class="pkg-item__price text--muted">// ETB 3,000</span>
+            </label>
+            <label class="pkg-item">
+              <input type="checkbox" class="pkg-check" data-price="1500" data-key="responsive" checked>
+              <span class="pkg-item__box"></span>
+              <span class="pkg-item__label"><span class="prop">responsive_design</span><span class="op">:</span> <span class="bool">true</span></span>
+              <span class="pkg-item__price text--muted">// ETB 1,500</span>
+            </label>
+            <label class="pkg-item">
+              <input type="checkbox" class="pkg-check" data-price="1000" data-key="seo">
+              <span class="pkg-item__box"></span>
+              <span class="pkg-item__label"><span class="prop">seo_optimization</span><span class="op">:</span> <span class="bool">false</span></span>
+              <span class="pkg-item__price text--muted">// ETB 1,000</span>
+            </label>
+            <label class="pkg-item">
+              <input type="checkbox" class="pkg-check" data-price="800" data-key="contact_form">
+              <span class="pkg-item__box"></span>
+              <span class="pkg-item__label"><span class="prop">contact_form</span><span class="op">:</span> <span class="bool">false</span></span>
+              <span class="pkg-item__price text--muted">// ETB 800</span>
+            </label>
+            <p class="custom-pkg__group-label">}<span class="op">;</span></p>
+
+            <p class="custom-pkg__group-label" style="margin-top:16px"><span class="kw">const</span> <span class="var">backend</span> <span class="op">=</span> {</p>
+            <label class="pkg-item">
+              <input type="checkbox" class="pkg-check" data-price="5000" data-key="backend">
+              <span class="pkg-item__box"></span>
+              <span class="pkg-item__label"><span class="prop">backend_api</span><span class="op">:</span> <span class="bool">false</span></span>
+              <span class="pkg-item__price text--muted">// ETB 5,000</span>
+            </label>
+            <label class="pkg-item">
+              <input type="checkbox" class="pkg-check" data-price="3500" data-key="database">
+              <span class="pkg-item__box"></span>
+              <span class="pkg-item__label"><span class="prop">database_integration</span><span class="op">:</span> <span class="bool">false</span></span>
+              <span class="pkg-item__price text--muted">// ETB 3,500</span>
+            </label>
+            <label class="pkg-item">
+              <input type="checkbox" class="pkg-check" data-price="4000" data-key="auth">
+              <span class="pkg-item__box"></span>
+              <span class="pkg-item__label"><span class="prop">user_authentication</span><span class="op">:</span> <span class="bool">false</span></span>
+              <span class="pkg-item__price text--muted">// ETB 4,000</span>
+            </label>
+            <label class="pkg-item">
+              <input type="checkbox" class="pkg-check" data-price="6000" data-key="ecommerce">
+              <span class="pkg-item__box"></span>
+              <span class="pkg-item__label"><span class="prop">ecommerce_module</span><span class="op">:</span> <span class="bool">false</span></span>
+              <span class="pkg-item__price text--muted">// ETB 6,000</span>
+            </label>
+            <label class="pkg-item">
+              <input type="checkbox" class="pkg-check" data-price="3000" data-key="admin">
+              <span class="pkg-item__box"></span>
+              <span class="pkg-item__label"><span class="prop">admin_dashboard</span><span class="op">:</span> <span class="bool">false</span></span>
+              <span class="pkg-item__price text--muted">// ETB 3,000</span>
+            </label>
+            <p class="custom-pkg__group-label">}<span class="op">;</span></p>
+
+            <p class="custom-pkg__group-label" style="margin-top:16px"><span class="kw">const</span> <span class="var">extras</span> <span class="op">=</span> {</p>
+            <label class="pkg-item">
+              <input type="checkbox" class="pkg-check" data-price="2500" data-key="deploy">
+              <span class="pkg-item__box"></span>
+              <span class="pkg-item__label"><span class="prop">cloud_deployment</span><span class="op">:</span> <span class="bool">false</span></span>
+              <span class="pkg-item__price text--muted">// ETB 2,500</span>
+            </label>
+            <label class="pkg-item">
+              <input type="checkbox" class="pkg-check" data-price="4500" data-key="support">
+              <span class="pkg-item__box"></span>
+              <span class="pkg-item__label"><span class="prop">one_month_support</span><span class="op">:</span> <span class="bool">false</span></span>
+              <span class="pkg-item__price text--muted">// ETB 4,500</span>
+            </label>
+            <label class="pkg-item">
+              <input type="checkbox" class="pkg-check" data-price="2000" data-key="source">
+              <span class="pkg-item__box"></span>
+              <span class="pkg-item__label"><span class="prop">full_source_code</span><span class="op">:</span> <span class="bool">false</span></span>
+              <span class="pkg-item__price text--muted">// ETB 2,000</span>
+            </label>
+            <p class="custom-pkg__group-label">}<span class="op">;</span></p>
+          </div>
+        </div>
+
+        <!-- Live Output -->
+        <div class="custom-pkg__output fade-in">
+          <div class="terminal__header">
+            <div class="terminal__dots">
+              <span class="dot dot--red"></span>
+              <span class="dot dot--yellow"></span>
+              <span class="dot dot--green"></span>
+            </div>
+            <span class="terminal__filename">estimate.output</span>
+          </div>
+          <div class="custom-pkg__result">
+            <div class="result__lines" id="resultLines">
+              <p><span class="text--muted">$</span> <span class="text--green">calculating...</span></p>
+            </div>
+            <div class="result__total">
+              <p class="result__label"><span class="comment">// total estimate</span></p>
+              <p class="result__amount"><span class="text--muted">ETB</span> <span class="text--green result__num" id="pkgTotal">4,500</span></p>
+              <p class="result__note text--muted"><span class="comment">/* prices are estimates. final quote after consultation */</span></p>
+            </div>
+            <a href="#contact" class="btn btn--primary btn--full" id="pkgCta">$ request --custom-quote</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact section" id="contact">
+    <div class="container">
+      <p class="section__label">// get_in_touch</p>
+      <h2 class="section__heading">Let&apos;s <span class="text--green">Connect</span></h2>
+      <div class="contact__grid">
+
+        <div class="contact__info fade-in">
+          <div class="contact-item">
+            <p><span class="text--green">&gt;</span> <span class="text--muted">email:</span> <a href="mailto:edlawitdamana@gmail.com" class="text--cyan">edlawitdamana@gmail.com</a></p>
+          </div>
+          <div class="contact-item">
+            <p><span class="text--green">&gt;</span> <span class="text--muted">location:</span> <span class="text--orange">Addis Ababa, Ethiopia</span></p>
+          </div>
+          <div class="contact-item">
+            <p><span class="text--green">&gt;</span> <span class="text--muted">status:</span> <span class="text--green">open_to_work</span></p>
+          </div>
+          <div class="contact-item">
+            <p><span class="text--green">&gt;</span> <span class="text--muted">response_time:</span> <span class="text--orange">"within 24 hours"</span></p>
+          </div>
+          <div class="contact-item">
+            <p><span class="text--green">&gt;</span> <span class="text--muted">github:</span> <a href="https://github.com/edlawitdamana" target="_blank" rel="noopener" class="text--cyan">github.com/edlawitdamana</a></p>
+          </div>
+        </div>
+
+        <div class="contact__form-wrap fade-in">
+          <form class="contact-form" id="contactForm">
+            <div class="form-group">
+              <label class="form-label"><span class="comment">// your name</span></label>
+              <input type="text" name="name" class="form-input" placeholder="Yonas Bekele" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label"><span class="comment">// your email</span></label>
+              <input type="email" name="email" class="form-input" placeholder="yonas@example.com" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label"><span class="comment">// subject</span></label>
+              <input type="text" name="subject" class="form-input" placeholder="Project Inquiry" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label"><span class="comment">// message</span></label>
+              <textarea name="message" class="form-input form-textarea" placeholder="Tell me about your project..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn--primary btn--full">$ send --message</button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <p class="footer__text">
+          <span class="text--green">edlawit@dev</span><span class="text--muted">:</span><span class="text--cyan">~</span><span class="text--muted">$</span>
+          <span class="text--muted"> &copy; 2026 Edlawit Damana Tesfaye.</span>
+          &nbsp;|&nbsp; <span class="text--muted">uptime:</span> <span class="text--green" id="uptime">00:00:00</span>
+          &nbsp;|&nbsp; <span class="text--muted">Ctrl+K</span> <span class="text--cyan">command palette</span>
+        </p>
+        <a href="#home" class="back-to-top" id="backToTop" aria-label="Back to top">&#8679;</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
