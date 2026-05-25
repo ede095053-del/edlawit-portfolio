@@ -48,6 +48,8 @@ body {
     rgba(0,0,0,0.08) 2px,
     rgba(0,0,0,0.08) 4px
   );
+  user-select: none;
+}
 }
 
 /* ---- Custom Cursor ---- */
@@ -230,6 +232,7 @@ body {
   align-items: center;
   gap: 28px;
   list-style: none;
+  pointer-events: all;
 }
 .nav__link {
   font-family: var(--font);
@@ -270,9 +273,10 @@ body {
   background: var(--bg-alt);
   border-bottom: 1px solid var(--border);
   overflow: hidden;
-  z-index: 999;
+  z-index: 998;
   display: flex;
   align-items: center;
+  pointer-events: none;
 }
 .ticker__track {
   display: flex;
@@ -780,8 +784,9 @@ body {
     padding: 16px 20px; gap: 14px;
     max-height: calc(100vh - var(--nav-h));
     overflow-y: auto;
+    pointer-events: none;
   }
-  .nav__links.open { display: flex; }
+  .nav__links.open { display: flex; pointer-events: all; }
   .nav__hamburger  { display: flex; }
   .btn--hire { width: 100%; text-align: center; }
 
